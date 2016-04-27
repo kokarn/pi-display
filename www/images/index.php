@@ -1,4 +1,6 @@
 <?php
+// Code almost completly stolen from Ben Dodson
+// https://github.com/bendodson/itunes-artwork-finder
 $search = $_GET['query'];
 $results = array();
 if ($search) {
