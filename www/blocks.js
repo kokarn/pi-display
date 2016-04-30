@@ -1,12 +1,15 @@
 (function(){
     var printed = 0;
-    function loadShows( callback ){
-        var xhr = $.ajax({
-            url: 'shows.php'
-        });
+    function loadDays( callback ){
+        var promises = [];
 
-        xhr.done( function( data ){
-            callback( data );
+        promises.push( $.ajax({
+            url: 'shows/'
+        }));
+
+        Promise.all( promises ).then( function( values ){
+            console.log( 'got all promises ' );
+            callback( values );
         });
     }
 
@@ -18,10 +21,6 @@
         }
 
         return str;
-    }
-
-    function parseShowName( showName ){
-        return String( showName ).trim().toLowerCase().replace( /\s+/g, '-' );
     }
 
     function getTodayDate(){
@@ -57,14 +56,14 @@
         }
     }
 
-    function printDay( day, shows ){
+    function printDay( day, items ){
         var dayDate = new Date( day );
         var currentDate = new Date();
         var startOfTodayDate = new Date( currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() );
 
-        var $outerWrapper = $( '.js-tv' );
-        var $titleWrapper = $( '<div class="show-day-title">' + getDayName( day ) + '</div>' )
-        var $showElement;
+        var $outerWrapper = $( '.js-blocks' );
+        var $titleWrapper = $( '<div class="day-title">' + getDayName( day ) + '</div>' )
+        var $blockElement;
 
         if( dayDate.getTime() < startOfTodayDate.getTime() ){
             return false;
@@ -74,13 +73,13 @@
             return false;
         }
 
-        for( var i = 0; i < shows.length && printed < 10; i = i + 1 ){
-            $showElement = printShow( $outerWrapper, shows[ i ] );
+        for( var i = 0; i < items.length && printed < 10; i = i + 1 ){
+            $blockElement = printBlock( $outerWrapper, items[ i ] );
 
             if( i === 0 ){
                 $titleWrapper.css({
-                    top: $showElement.position().top + 10,
-                    left: $showElement.position().left
+                    top: $blockElement.position().top + 10,
+                    left: $blockElement.position().left
                 });
 
                 $outerWrapper.append( $titleWrapper );
@@ -88,9 +87,8 @@
         }
     }
 
-    function printShow( $wrapper, show ){
-        var parsedShowName = parseShowName( show );
-        var $element = $( '<div class="show-wrapper"><img src="images/?query=' + parsedShowName + '"></div>' );
+    function printBlock( $wrapper, item ){
+        var $element = $( '<div class="item-wrapper"><img src="' + item.image + '"></div>' );
 
         $wrapper.append( $element );
 
@@ -99,22 +97,37 @@
         return $element;
     }
 
-    function printAllShows( shows ){
+    function printAllBlocks( items ){
+        var days = {};
         printed = 0;
-        $( '.js-tv' ).empty();
+        $( '.js-blocks' ).empty();
 
-        for( var day in shows ){
-            if( shows.hasOwnProperty( day ) ){
-                printDay( day, shows[ day ] );
+        for( var i = 0; i < items.length; i = i + 1 ){
+            for( var day in items[ i ] ){
+                if( items[ i ].hasOwnProperty( day ) ){
+                    if( typeof days[ day ] === 'undefined' ){
+                        days[ day ] = [];
+                    }
+
+                    for( var x = 0; x < items[ i ][ day ].length; x = x + 1 ){
+                        days[ day ].push( items[ i ][ day ][ x ] );
+                    }
+                }
+            }
+        }
+
+        for( var day in days ){
+            if( days.hasOwnProperty( day ) ){
+                printDay( day, days[ day ] );
             }
         }
     }
 
     $(function(){
-        loadShows( printAllShows );
+        loadDays( printAllBlocks );
 
         setInterval( function(){
-            loadShows( printAllShows );
+            loadDays( printAllBlocks );
         }, 60000 );
     });
 })();

@@ -1,5 +1,5 @@
 <?php
-include( 'config.php' );
+include( '../config.php' );
 
 $url = 'http://www.myepisodes.com/rss.php?feed=mylist&uid=mirrorer&pwdmd5=' . $myEpisodes;
 
@@ -17,7 +17,13 @@ foreach( $shows->channel->item as $show ):
         $items[ $dateString ] = array();
     endif;
 
-    $items[ $dateString ][] = trim( $matches[ 1 ] );
+    $item = array();
+
+    $item[ 'image' ] = '/images/?query=' . preg_replace( '#\s+#mis', '-', strtolower( trim( $matches[ 1 ] ) ) );
+
+    $item[ 'name' ] = trim( $matches[ 1 ] );
+
+    $items[ $dateString ][] = $item;
 endforeach;
 
 header( 'Access-Control-Allow-Origin: *' );
