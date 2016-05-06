@@ -21,8 +21,6 @@ foreach( $shows->channel->item as $show ):
 
     $item[ 'image' ] = '/images/?query=' . preg_replace( '#\s+#mis', '-', strtolower( trim( $matches[ 1 ] ) ) );
 
-    $item[ 'name' ] = trim( $matches[ 1 ] );
-
     $items[ $dateString ][] = $item;
 endforeach;
 
