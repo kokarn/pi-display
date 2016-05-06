@@ -90,6 +90,10 @@
     function printBlock( $wrapper, item ){
         var $element = $( '<div class="item-wrapper"><img src="' + item.image + '"></div>' );
 
+        if( item.time ){
+            $element.append( '<time>' + item.time + '</time>' );
+        }
+
         $wrapper.append( $element );
 
         printed = printed + 1;
