@@ -99,6 +99,7 @@
 
     function printAllBlocks( items ){
         var days = {};
+        var dayList = [];
         printed = 0;
         $( '.js-blocks' ).empty();
 
@@ -107,6 +108,7 @@
                 if( items[ i ].hasOwnProperty( day ) ){
                     if( typeof days[ day ] === 'undefined' ){
                         days[ day ] = [];
+                        dayList.push( day );
                     }
 
                     for( var x = 0; x < items[ i ][ day ].length; x = x + 1 ){
@@ -116,10 +118,10 @@
             }
         }
 
-        for( var day in days ){
-            if( days.hasOwnProperty( day ) ){
-                printDay( day, days[ day ] );
-            }
+        dayList.sort();
+
+        for( var i = 0; i < dayList.length; i = i + 1 ){
+            printDay( dayList[ i ], days[ dayList[ i ] ] );
         }
     }
 
