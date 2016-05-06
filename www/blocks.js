@@ -7,6 +7,10 @@
             url: 'shows/'
         }));
 
+        promises.push( $.ajax({
+            url: 'hvm/'
+        }));
+
         Promise.all( promises ).then( function( values ){
             console.log( 'got all promises ' );
             callback( values );
