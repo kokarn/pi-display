@@ -19,7 +19,7 @@ foreach( $shows->channel->item as $show ):
 
     $item = array();
 
-    $item[ 'image' ] = '/images/?query=' . preg_replace( '#\s+#mis', '-', strtolower( trim( $matches[ 1 ] ) ) );
+    $item[ 'image' ] = $_SERVER[ 'REQUEST_URI' ] . 'images/?query=' . preg_replace( '#\s+#mis', '-', strtolower( trim( $matches[ 1 ] ) ) );
 
     $items[ $dateString ][] = $item;
 endforeach;
