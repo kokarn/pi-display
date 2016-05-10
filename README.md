@@ -1,6 +1,18 @@
 ## Pi Display
 
-Basic webpage to display some things.
+![Preview](/preview.png)
+
+### Features
+ ##### Time  
+ ##### Weather
+  * Selected location  
+
+##### Upcoming events  
+  * Optional time
+  * Data from external sources  
+    * Ice hockey world championships
+    * Series from [MyEpisodes](http://myepisodes.com)
+    * Custom
 
 ## Setup
 
