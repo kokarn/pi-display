@@ -33,6 +33,7 @@ cp www/_config.php www/config.php
 
 The only step left is to add your keys to `www/config.php` with something like nano
 ```bash
+cp www/_config.php www/config.php
 nano www/config.php
 ```
 
