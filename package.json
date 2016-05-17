@@ -1,0 +1,22 @@
+{
+  "name": "pi-display",
+  "version": "1.0.0",
+  "description": "![Preview](/preview.png)",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://kokarn@github.com/kokarn/pi-display.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kokarn/pi-display/issues"
+  },
+  "homepage": "https://github.com/kokarn/pi-display",
+  "devDependencies": {
+    "dirsum": "^0.1.1"
+  }
+}
