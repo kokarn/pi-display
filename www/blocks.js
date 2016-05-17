@@ -82,7 +82,7 @@
 
             if( i === 0 ){
                 $titleWrapper.css({
-                    top: $blockElement.position().top + 10,
+                    top: $blockElement.position().top + 18,
                     left: $blockElement.position().left
                 });
 

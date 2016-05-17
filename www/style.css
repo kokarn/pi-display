@@ -152,9 +152,10 @@ i {
 }
 
 .day-title {
-    font-size: 30px;
+    font-size: 28px;
     position: absolute;
     top: -35px;
+    z-index: 1;
 }
 
 .item-wrapper {
