@@ -16,7 +16,7 @@
                 '</div>';
 
                 html = html + '<div class="foreacasts-wrapper">';
-                for( var i = 1; i < 6; i = i + 1 ) {
+                for( var i = 0; i < 5; i = i + 1 ) {
                     html = html + '<div class="foreacast-wrapper">';
                     html = html + '<i class="icon-' + weather.forecast[i].code + '"></i>';
                     html = html + '<div class="forecast-weather-wrapper">' + weather.forecast[i].day + '<br>' + weather.forecast[i].high + '&deg;' + weather.units.temp + '</div>';
