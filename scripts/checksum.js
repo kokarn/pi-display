@@ -2,13 +2,14 @@
 
 const dirsum = require( 'dirsum' );
 const fs = require( 'fs' );
+const path = require( 'path' );
 
-dirsum.digest( './../www', 'sha1', ( error, hashes ) => {
+dirsum.digest( path.join( __dirname + '/../www' ), 'sha1', ( error, hashes ) => {
     if ( error ) {
         throw error;
     }
 
-    fs.writeFile( './../www/checksum.json', '"' + hashes.hash +'"', ( error ) => {
+    fs.writeFile( path.join( __dirname + '/../www/checksum.json' ), '"' + hashes.hash +'"', ( error ) => {
         if ( error ) {
             throw error;
         }
