@@ -12,6 +12,7 @@
   * Data from external sources  
     * Ice hockey world championships
     * Series from [MyEpisodes](http://myepisodes.com)
+    * Euro 2016
     * Custom
 
 ## Setup
