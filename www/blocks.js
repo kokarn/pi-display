@@ -12,6 +12,10 @@
         }));
 
         promises.push( $.ajax({
+            url: 'euro2016/'
+        }));
+
+        promises.push( $.ajax({
             url: 'custom/'
         }));
 
