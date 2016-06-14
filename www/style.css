@@ -151,6 +151,7 @@ i {
     position: absolute;
 }
 
+
 .day-title {
     font-size: 28px;
     position: absolute;
@@ -174,7 +175,7 @@ i {
     z-index: -1;
 }
 
-.item-wrapper time {
+.item-wrapper .footer {
     background-color: rgba( 0, 0, 0, 0.5 );
     bottom: 0;
     font-weight: 500;
@@ -183,4 +184,14 @@ i {
     position: absolute;
     right: 0;
     text-align: center;
+}
+
+.item-wrapper .footer .title {
+    display: inline-block;
+    margin: 0 5px;
+}
+
+.item-wrapper .footer time {
+    display: inline-block;
+    margin: 0 5px;
 }

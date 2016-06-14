@@ -97,9 +97,18 @@
 
     function printBlock( $wrapper, item ){
         var $element = $( '<div class="item-wrapper"><img src="' + item.image + '"></div>' );
+        var $footer = $( '<div class="footer"></div>' );
+
+        if( item.title ){
+            $footer.append( '<span class="title"> ' + item.title + '</span>' );
+        }
 
         if( item.time ){
-            $element.append( '<time>' + item.time + '</time>' );
+            $footer.append( '<time>' + item.time + '</time>' );
+        }
+
+        if( item.title || item.time ){
+            $element.append( $footer );
         }
 
         $wrapper.append( $element );
