@@ -16,6 +16,10 @@
         }));
 
         promises.push( $.ajax({
+            url: 'shl/'
+        }));
+
+        promises.push( $.ajax({
             url: 'custom/'
         }));
 
