@@ -1,6 +1,14 @@
 <?php
 include( '../config.php' );
 $teamId = 422;
+
+if( !isset( $fastestScoresApi ) || strlen( $fastestScoresApi ) < 10 ){
+    header( 'Access-Control-Allow-Origin: *' );
+    header( 'Content-Type: application/json' );
+    echo json_encode( array() );
+    exit;
+}
+
 $data = file_get_contents( 'https://api.crowdscores.com/api/v1/matches?team_id='  . $teamId . '&api_key=' . $fastestScoresApi );
 
 $realData = json_decode( $data );

@@ -1,6 +1,13 @@
 <?php
 include( '../config.php' );
 
+if( !isset( $myEpisodes ) || strlen( $myEpisodes ) < 32 ){
+    header( 'Access-Control-Allow-Origin: *' );
+    header( 'Content-Type: application/json' );
+    echo json_encode( array() );
+    exit;
+}
+
 $url = 'http://www.myepisodes.com/rss.php?feed=mylist&uid=mirrorer&pwdmd5=' . $myEpisodes;
 
 $data = file_get_contents( $url );
