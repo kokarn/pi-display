@@ -20,6 +20,10 @@
         }));
 
         promises.push( $.ajax({
+            url: 'wch/'
+        }));
+
+        promises.push( $.ajax({
             url: 'custom/'
         }));
 
