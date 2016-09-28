@@ -20,8 +20,10 @@ foreach( $matchDays[ 1 ] as $matchDay ):
 
     if( $teams[ 1 ][ 0 ] == 'Team Sweden' ):
         $match[ 'opponent' ] = $teams[ 1 ][ 1 ];
-    else :
+    elseif( $teams[ 1 ][ 1 ] == 'Team Sweden' ):
         $match[ 'opponent' ] = $teams[ 1 ][ 0 ];
+    else:
+        continue;
     endif;
 
     preg_match( '#<span class="matchup-time-or-result">(.+?)</span>#mis', $time[ 1 ], $time );
