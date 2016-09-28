@@ -125,7 +125,7 @@
 
             if( i === 0 ){
                 $titleWrapper.css({
-                    top: $blockElement.position().top + 18,
+                    top: $blockElement.position().top + 17,
                     left: $blockElement.position().left
                 });
 
