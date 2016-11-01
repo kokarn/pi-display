@@ -2,6 +2,10 @@
 include( '../config.php' );
 include( 'SHL.class.php' );
 
+if( !isset( $shlClientId ) || !isset( $shlClientSecret ) ):
+    exit;
+endif;
+
 $findTeams = array( 'LIF', 'KHK' );
 
 $shl = new SHL( $shlClientId, $shlClientSecret );
