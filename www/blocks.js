@@ -20,6 +20,10 @@
         }));
 
         promises.push( $.ajax({
+            url: 'wch/'
+        }));
+
+        promises.push( $.ajax({
             url: 'custom/'
         }));
 
@@ -89,12 +93,39 @@
             return false;
         }
 
+        items.sort( function( a, b ){
+            var aTime;
+            var bTime;
+
+            if( a.time ){
+                aTime = Number( a.time.replace( /:/gim, '' ) );
+            } else {
+                aTime = 0;
+            }
+
+            if( b.time ){
+                bTime = Number( b.time.replace( /:/gim, '' ) );
+            } else {
+                bTime = 0;
+            }
+
+            if ( aTime < bTime ){
+                return -1;
+            }
+
+            if ( aTime > bTime ) {
+                return 1;
+            }
+
+            return 0;
+        } );
+
         for( var i = 0; i < items.length && printed < 10; i = i + 1 ){
             $blockElement = printBlock( $outerWrapper, items[ i ] );
 
             if( i === 0 ){
                 $titleWrapper.css({
-                    top: $blockElement.position().top + 18,
+                    top: $blockElement.position().top + 17,
                     left: $blockElement.position().left
                 });
 
