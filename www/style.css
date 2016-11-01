@@ -166,8 +166,18 @@ i {
     top: 70px;
 }
 
+.route-wrapper {
+    margin-top: 35px;
+}
+
+.route-wrapper:first-child {
+    margin-top: 0;
+}
+
 .trip-name {
-    margin-right: 30px;
+    display: block;
+    font-size: 20px;
+    margin: 0 20px;
 }
 
 .trip-time {

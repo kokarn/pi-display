@@ -1,4 +1,5 @@
 <?php
+include( '../config.php' );
 
 $from = '9021014006480000';
 $to = array(
@@ -39,13 +40,13 @@ function doRequest( $accessToken, $url ){
 }
 
 function getTrips( $accessToken, $from, $to ){
-    $url = 'https://api.vasttrafik.se/bin/rest.exe/v2/departureBoard?id=' . $from . '&date=' . date( 'o-m-d' ) . '&time=' . date( 'H:i' ) . '&timeSpan=60&needJourneyDetail=0&direction=' . $to . '&format=json';
+    $url = 'https://api.vasttrafik.se/bin/rest.exe/v2/trip?originId=' . $from . '&needJourneyDetail=0&destId=' . $to . '&format=json';
     $return = array();
 
     $data = doRequest( $accessToken, $url );
 
-    if( $data[ 'DepartureBoard' ][ 'Departure' ] ):
-        $return = $data[ 'DepartureBoard' ][ 'Departure' ];
+    if( isset( $data[ 'TripList' ][ 'Trip' ] ) ):
+        $return = $data[ 'TripList' ][ 'Trip' ];
     endif;
 
     return $return;
@@ -60,12 +61,44 @@ endfor;
 
 $countdowns = array();
 foreach( $trips as $trip ):
-    if( !isset( $countdowns[ $trip[ 'sname' ] ] ) ):
-        $countdowns[ $trip[ 'sname' ] ] = array();
+    if( isset( $trip[ 'Leg' ][ 'name' ] ) ):
+        $trip[ 'Leg' ] = array(
+            $trip[ 'Leg' ]
+        );
     endif;
 
-    //2008-08-07 18:11:31
-    $countdowns[ $trip[ 'sname' ] ][] = ceil( ( strtotime( $trip[ 'rtDate' ] . ' ' . $trip[ 'rtTime' ] ) - time() ) / 60 );
+    $stops = array();
+
+    foreach( $trip[ 'Leg' ] as $leg ):
+        if( $leg[ 'type' ] === 'WALK' ):
+            continue;
+        endif;
+
+        $stops[] = array(
+            'name' => $leg[ 'sname' ],
+            'destination' => str_replace( ', Göteborg', '', $leg[ 'Destination' ][ 'name' ] )
+        );
+    endforeach;
+
+    $identifierParts = array();
+    foreach( $stops as $stop ):
+        $identifierParts[] = $stop[ 'name' ];
+    endforeach;
+
+    $identifier = implode( $identifierParts, '-' );
+
+    $ttl = ceil( ( strtotime( $trip[ 'Leg' ][ 0 ][ 'Origin' ][ 'rtDate' ] . ' ' . $trip[ 'Leg' ][ 0 ][ 'Origin' ][ 'rtTime' ] ) - time() ) / 60 );
+
+    if( $ttl > 0 && $ttl < 60 ):
+        if( !isset( $countdowns[ $identifier ] ) ):
+            $countdowns[ $identifier ] = array(
+                'ttl' => array(),
+                'route' => $stops
+            );
+        endif;
+
+        $countdowns[ $identifier ][ 'ttl' ][] = $ttl;
+    endif;
 endforeach;
 
 header( 'Access-Control-Allow-Origin: *' );

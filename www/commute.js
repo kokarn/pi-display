@@ -3,15 +3,25 @@
 
     function printTrips( trips ){
         var $wrapper = $( '.js-commute' );
+        var tripName;
+        var i;
+        var $route;
 
         $wrapper.empty();
 
-        for( var name in trips ){
-            if( trips.hasOwnProperty( name ) ){
-                var $route = $( '<div><span class="trip-name">' + name + '</span></div>' );
+        for( var identifier in trips ){
+            if( trips.hasOwnProperty( identifier ) ){
+                tripName = [];
+                for( i = 0; i < trips[ identifier ].route.length; i = i + 1 ){
+                    tripName.push( trips[ identifier ].route[ i ].name + ' --> ' + trips[ identifier ].route[ i ].destination );
+                }
 
-                for( var i = 0; i < trips[ name ].length; i = i + 1 ){
-                    $route.append( '<span class="trip-time">' + trips[ name ][ i ] + '</span>' );
+                tripName = tripName.join( ' | ' );
+
+                $route = $( '<div class="route-wrapper"><span class="trip-name">' + tripName + '</span></div>' );
+
+                for( i = 0; i < trips[ identifier ][ 'ttl' ].length; i = i + 1 ){
+                    $route.append( '<span class="trip-time">' + trips[ identifier ][ 'ttl' ][ i ] + '</span>' );
                 }
 
                 $wrapper.append( $route );
