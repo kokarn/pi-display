@@ -159,6 +159,22 @@ i {
     z-index: 1;
 }
 
+.commute {
+    font-size: 40px;
+    left: 50px;
+    position: absolute;
+    top: 70px;
+}
+
+.trip-name {
+    margin-right: 30px;
+}
+
+.trip-time {
+    font-weight: 700;
+    margin: 0 20px;
+}
+
 .item-wrapper {
     display: inline-block;
     height: 160px;
