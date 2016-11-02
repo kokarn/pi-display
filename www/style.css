@@ -160,14 +160,15 @@ i {
 }
 
 .commute {
-    font-size: 40px;
     left: 50px;
+    overflow: hidden;
     position: absolute;
-    top: 70px;
+    top: 75px;
 }
 
 .route-wrapper {
     margin-top: 35px;
+    width: 410px;
 }
 
 .route-wrapper:first-child {
@@ -176,13 +177,17 @@ i {
 
 .trip-name {
     display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-size: 20px;
-    margin: 0 20px;
+    white-space: nowrap;
+    width: 100%;
 }
 
 .trip-time {
+    font-size: 60px;
     font-weight: 700;
-    margin: 0 20px;
+    margin-right: 47px;
 }
 
 .item-wrapper {
