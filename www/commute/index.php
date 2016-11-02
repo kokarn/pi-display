@@ -101,6 +101,8 @@ foreach( $trips as $trip ):
     endif;
 endforeach;
 
+ksort( $countdowns );
+
 header( 'Access-Control-Allow-Origin: *' );
 header( 'Content-Type: application/json' );
 echo json_encode( $countdowns );
