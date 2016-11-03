@@ -54,51 +54,56 @@ function getTrips( $accessToken, $from, $to ){
 
 $accessToken = getAccessToken( $vasttrafikAuthToken );
 
-$trips = array();
+$destinations = array();
 for( $i = 0; $i < count( $to ); $i = $i + 1 ):
-    $trips = array_merge( $trips, getTrips( $accessToken, $from, $to[ $i ] ) );
+    $destinations[ $to[ $i ] ] = getTrips( $accessToken, $from, $to[ $i ] );
 endfor;
 
 $countdowns = array();
-foreach( $trips as $trip ):
-    if( isset( $trip[ 'Leg' ][ 'name' ] ) ):
-        $trip[ 'Leg' ] = array(
-            $trip[ 'Leg' ]
-        );
-    endif;
-
-    $stops = array();
-
-    foreach( $trip[ 'Leg' ] as $leg ):
-        if( $leg[ 'type' ] === 'WALK' ):
-            continue;
-        endif;
-
-        $stops[] = array(
-            'name' => $leg[ 'sname' ],
-            'destination' => str_replace( ', Göteborg', '', $leg[ 'Destination' ][ 'name' ] )
-        );
-    endforeach;
-
-    $identifierParts = array();
-    foreach( $stops as $stop ):
-        $identifierParts[] = $stop[ 'name' ];
-    endforeach;
-
-    $identifier = implode( $identifierParts, '-' );
-
-    $ttl = ceil( ( strtotime( $trip[ 'Leg' ][ 0 ][ 'Origin' ][ 'rtDate' ] . ' ' . $trip[ 'Leg' ][ 0 ][ 'Origin' ][ 'rtTime' ] ) - time() ) / 60 );
-
-    if( $ttl > 0 && $ttl < 60 ):
-        if( !isset( $countdowns[ $identifier ] ) ):
-            $countdowns[ $identifier ] = array(
-                'ttl' => array(),
-                'route' => $stops
+foreach( $destinations as $destination ):
+    foreach( $destination as $trip ):
+        if( isset( $trip[ 'Leg' ][ 'name' ] ) ):
+            $trip[ 'Leg' ] = array(
+                $trip[ 'Leg' ]
             );
         endif;
 
-        $countdowns[ $identifier ][ 'ttl' ][] = $ttl;
-    endif;
+        $stops = array();
+
+        foreach( $trip[ 'Leg' ] as $leg ):
+            if( $leg[ 'type' ] === 'WALK' ):
+                continue;
+            endif;
+
+            $stops[] = array(
+                'name' => $leg[ 'sname' ],
+                'destination' => str_replace( ', Göteborg', '', $leg[ 'Destination' ][ 'name' ] )
+            );
+        endforeach;
+
+
+        $identifierParts = array();
+        foreach( $stops as $stop ):
+            $identifierParts[] = $stop[ 'name' ];
+        endforeach;
+
+        $identifier = implode( $identifierParts, '-' );
+
+        $ttl = ceil( ( strtotime( $trip[ 'Leg' ][ 0 ][ 'Origin' ][ 'rtDate' ] . ' ' . $trip[ 'Leg' ][ 0 ][ 'Origin' ][ 'rtTime' ] ) - time() ) / 60 );
+
+        if( $ttl > 0 && $ttl < 60 ):
+            if( !isset( $countdowns[ $identifier ] ) ):
+                $lastLeg = end( $trip[ 'Leg' ] );
+                $countdowns[ $identifier ] = array(
+                    'ttl' => array(),
+                    'destination' =>  str_replace( ', Göteborg', '', $lastLeg[ 'Destination' ][ 'name' ] ),
+                    'route' => $stops
+                );
+            endif;
+
+            $countdowns[ $identifier ][ 'ttl' ][] = $ttl;
+        endif;
+    endforeach;
 endforeach;
 
 ksort( $countdowns );

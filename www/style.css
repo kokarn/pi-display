@@ -161,14 +161,19 @@ i {
 
 .commute {
     left: 50px;
-    overflow: hidden;
     position: absolute;
-    top: 75px;
+    top: 10px;
+}
+
+.destination-wrapper {
+    border: 1px solid;
+    padding: 20px;
+    box-sizing: border-box;
+    width: 400px;
 }
 
 .route-wrapper {
     margin-top: 35px;
-    width: 410px;
 }
 
 .route-wrapper:first-child {
@@ -185,9 +190,18 @@ i {
 }
 
 .trip-time {
+    display: inline-block;
     font-size: 60px;
     font-weight: 700;
-    margin-right: 47px;
+    width: 95px;
+}
+
+.trip-time:nth-child( 5 ){
+    width: 70px;
+}
+
+.trip-time:nth-child( n + 6 ) {
+    display: none;
 }
 
 .item-wrapper {

@@ -28,15 +28,20 @@
             return false;
         }
 
-        if( currentMinute > display.to.minute ){
+        if( currentHour == display.to.hour && currentMinute > display.to.minute ){
             return false;
         }
 
         return true;
     }
 
+    function cssIfyString( string ){
+        return string.toLowerCase().replace( /\s+/gim, '-' ).replace( /[^a-z\-]/gim, '' );
+    }
+
     function printTrips( trips ){
         var $wrapper = $( '.js-commute' );
+        var $destinationWrapper;
         var tripName;
         var i;
         var $route;
@@ -51,10 +56,15 @@
             if( trips.hasOwnProperty( identifier ) ){
                 tripName = [];
                 for( i = 0; i < trips[ identifier ].route.length; i = i + 1 ){
+                    if( trips[ identifier ].route[ i ].destination === trips[ identifier ].destination ){
+                        tripName.push( trips[ identifier ].route[ i ].name );
+                        continue;
+                    }
+
                     tripName.push( trips[ identifier ].route[ i ].name + ' --> ' + trips[ identifier ].route[ i ].destination );
                 }
 
-                tripName = tripName.join( ' | ' );
+                tripName = tripName.join( ' --> ' );
 
                 $route = $( '<div class="route-wrapper"><span class="trip-name">' + tripName + '</span></div>' );
 
@@ -62,7 +72,16 @@
                     $route.append( '<span class="trip-time">' + trips[ identifier ][ 'ttl' ][ i ] + '</span>' );
                 }
 
-                $wrapper.append( $route );
+                $destinationWrapper = $( '.js-destination-' + cssIfyString( trips[ identifier ].destination ) );
+
+                if( $destinationWrapper.length <= 0 ){
+                    $destinationWrapper = $( '<div class="destination-wrapper js-destination-' + cssIfyString( trips[ identifier ].destination ) + '"></div>' );
+                    $wrapper.append( $destinationWrapper );
+
+                    $destinationWrapper.before( '<h2>' + trips[ identifier ].destination + '</h2>' );
+                }
+
+                $destinationWrapper.append( $route );
             }
         }
     }
