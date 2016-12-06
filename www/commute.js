@@ -24,7 +24,7 @@
             return false;
         }
 
-        if( currentMinute < display.from.minute ){
+        if( currentHour === display.from.hour && currentMinute < display.from.minute ){
             return false;
         }
 
