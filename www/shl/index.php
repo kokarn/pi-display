@@ -10,11 +10,11 @@ $findTeams = array( 'LIF', 'KHK' );
 
 $shl = new SHL( $shlClientId, $shlClientSecret );
 
-$games = $shl->getGames( 2016 );
+$games = $shl->getGames( date( 'Y' ) );
 
 $items = array();
 
-foreach( $games[ 'games' ] as $game ):
+foreach( $games as $game ):
 
     if( !in_array( $game[ 'away_team_code' ], $findTeams ) && !in_array( $game[ 'home_team_code' ], $findTeams ) ):
         continue;
