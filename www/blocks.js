@@ -12,11 +12,11 @@
         }));
 
         promises.push( $.ajax({
-            url: 'euro2016/'
+            url: 'shl/'
         }));
 
         promises.push( $.ajax({
-            url: 'shl/'
+            url: 'ha/'
         }));
 
         promises.push( $.ajax({
