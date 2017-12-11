@@ -3,8 +3,8 @@ include( '../config.php' );
 
 $from = '9021014006480000';
 $to = array(
-    '9021014005355000',
-    '9021014003395000'
+    '9021014003395000',
+    '9021014007320000'
 );
 
 function getAccessToken( $auth ){
@@ -88,6 +88,10 @@ foreach( $destinations as $destination ):
         endforeach;
 
         $identifier = implode( $identifierParts, '-' );
+
+        if( !isset( $trip[ 'Leg' ][ 0 ][ 'Origin' ][ 'rtDate' ] ) ) :
+            continue;
+        endif;
 
         $ttl = ceil( ( strtotime( $trip[ 'Leg' ][ 0 ][ 'Origin' ][ 'rtDate' ] . ' ' . $trip[ 'Leg' ][ 0 ][ 'Origin' ][ 'rtTime' ] ) - time() ) / 60 );
 
