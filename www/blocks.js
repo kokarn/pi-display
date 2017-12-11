@@ -27,10 +27,15 @@
             url: 'custom/'
         }));
 
-        Promise.all( promises ).then( function( values ){
-            console.log( 'got all promises ' );
-            callback( values );
-        });
+        Promise.all( promises )
+            .then( function( values ){
+                console.log( 'got all promises ' );
+                callback( values );
+            } )
+            .catch( ( promiseError ) => {
+                $( '.js-error' ).html( '<pre>' + JSON.stringify( promiseError, null, 4 ) + '</pre>' );
+                console.log( promiseError );
+            } );
     }
 
     function zeroPad(number, length) {

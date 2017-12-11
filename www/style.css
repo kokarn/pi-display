@@ -146,6 +146,14 @@ i {
     margin: 0 20px;
 }
 
+.error {
+    left: 490px;
+    overflow: hidden;
+    position: absolute;
+    top: 380px;
+    width: 250px;
+}
+
 .blocks {
     bottom: -4px;
     position: absolute;
