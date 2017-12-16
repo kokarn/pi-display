@@ -32,7 +32,7 @@
                 console.log( 'got all promises ' );
                 callback( values );
             } )
-            .catch( ( promiseError ) => {
+            .catch( function( promiseError ){
                 $( '.js-error' ).html( '<pre>' + JSON.stringify( promiseError, null, 4 ) + '</pre>' );
                 console.log( promiseError );
             } );
